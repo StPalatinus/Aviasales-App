@@ -1,0 +1,16 @@
+$dafault-background-color: #F3F7FA;
+
+.App {
+    background-color: $dafault-background-color;
+}
+
+.header {
+    background-color: $dafault-background-color;
+}
+
+.header-logo {
+    display: block;
+    // width: 90px;
+    // height: 90px;
+    margin: 0 auto;
+}

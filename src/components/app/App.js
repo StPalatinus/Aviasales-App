@@ -1,22 +1,14 @@
-import "./App.scss";
 import React from "react";
-import mainLogo, { ReactComponent as Logo } from "../../img/mainlogo.svg";
-
-// const logo = require('../../img/mainlogo.svg');
+import appStyles from "./App.module.scss";
+import mainLogo from "../../img/mainlogo.svg";
 
 function App() {
-  console.log("import:");
-  console.log(mainLogo);
-  // console.log("require");
-  // console.log(logo);
-  // console.log(logo.default);
+  App.dafeultProps = {};
+
   return (
-    <section className="App">
-      <header>
-        <img className="header--logo" srs={mainLogo} alt="mainlogo" />
-        <Logo />
-        {/* <img className="header--logo" srs={logo} alt="logo"/> */}
-        {/* <img src={`${process.env.PUBLIC_URL  }/mainlogo.svg`} alt="logo" /> */}
+    <section className={appStyles.App}>
+      <header className={appStyles.header}>
+        <img className={appStyles["header-logo"]} src={mainLogo} alt="tst" />
       </header>
       <aside>_ASIDE_</aside>
       <main>_BODY_</main>
@@ -24,5 +16,7 @@ function App() {
     </section>
   );
 }
+
+App.propTypes = {};
 
 export default App;

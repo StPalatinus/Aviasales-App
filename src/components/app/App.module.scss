@@ -1,16 +1,305 @@
-$dafault-background-color: #F3F7FA;
+$background-dafault-color: #F3F7FA;
+$text-default-color: #4A4A4A;
+$content-block-default-color: #FFFFFF;
+$checkbox-default-color:#9ABBCE;
+$checkbox-checked-color: #2196F3;
+$filter-hover-color: #F1FCFF;
+$activeButtonsDefaultColor: #FFFFFF;
+$buttonBordersDefaultColor: #E5E5E5;
+$buttonHoverDefaultColor: #2196F3;
+
+@font-face {
+    font-family: "Open Sans";
+    src: url(../../fonts/OpenSans-SemiBold.ttf);
+}
+
+$page-default-font-stack: "Open Sans",Arial, Helvetica, sans-serif;
+
+@mixin transfer-count__filter--header-text {
+    color: $text-default-color;
+    text-transform: uppercase;
+    font: 12px/12px $page-default-font-stack {
+        style: normal;
+        weight: 600;
+        family: $page-default-font-stack;
+    }
+}
+
+@mixin transfer-count__filter-list--text {
+    color: $text-default-color;
+    font: 13px/20px $page-default-font-stack {
+        style: normal;
+        weight: normal;
+    }
+}
+
+@mixin tickets__filter-radio-button--text {
+    letter-spacing: 0.5px;
+    font: 12px/20px $page-default-font-stack{
+        style: normal;
+        weight: 600;
+    }
+    text: {
+        align: center;
+        transform: uppercase;
+    }
+}
+
+@mixin buttonDefaultStyle {
+    background-color: $activeButtonsDefaultColor;
+    border-style: solid;
+    border-color: $buttonBordersDefaultColor;
+    border-radius: 5px;
+    user-select: none;
+    text-align: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    &:active {
+        color: $activeButtonsDefaultColor;
+        background-color: $buttonHoverDefaultColor;
+    }
+    &:hover {
+        background-color: $buttonHoverDefaultColor;
+    }
+}
 
 .App {
-    background-color: $dafault-background-color;
+    display: grid;
+    min-height: 100vh;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    grid-gap: 20px;
+    grid-template-rows: max-content;
+    background-color: $background-dafault-color;
 }
+
+//HEADER
 
 .header {
-    background-color: $dafault-background-color;
+    grid-column: 1/3;
+    background-color: $background-dafault-color;
 }
 
-.header-logo {
+.header--logo {
     display: block;
-    // width: 90px;
-    // height: 90px;
     margin: 0 auto;
+}
+
+//transfer-count (side)
+
+.transfer-count {
+    grid-column: 1/2;
+    width: 232px;
+    height: 252px;
+    padding-bottom: 5px;
+    border-radius: 5px;
+    background-color: $content-block-default-color;
+    user-select: none;
+}
+
+.transfer-count__header {
+    @include transfer-count__filter--header-text;
+    margin: 0;
+    letter-spacing: 0.5px;
+    padding: 20px 20px 5px 20px;
+}
+
+.transfer-count__filter {
+    // list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+.transfer-count__filter-item {
+    // height: 40px;
+    // padding: 0px 20px 0px 0;
+    // margin-left: 20px;
+    // &:hover {
+    //     background-color: $filter-hover-color;
+    // }
+}
+
+
+.transfer-count__filter-checkbox {
+    display: none;
+}
+
+.transfer-count__filter-checkbox-label {
+    position: relative;
+    width: 232px - 67px;
+    height: 40px;
+    padding: 0px 20px 0px 47px;
+    @include transfer-count__filter-list--text;
+    display: inline-block;
+    position: relative;
+    top: 9px;
+    &:hover {
+        cursor: pointer;
+        background-color: $filter-hover-color;
+    }
+    &::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        top: 9px;
+        left: 20px;
+        width: 20px;
+        height: 20px;
+        border: 1px solid $checkbox-default-color;
+    }
+    &::after {
+        content: "";
+        display: none;
+        position: absolute;
+        left: 26px;
+        top: 10px;
+        width: 8px;
+        height: 12px;
+        border-top: none;
+        border-left: none;
+        border-right: 2px solid $checkbox-checked-color;
+        border-bottom: 2px solid $checkbox-checked-color;
+        transform: rotate(45deg);
+    }
+    &:checked{
+        
+    }
+}
+
+.transfer-count__filter-checkbox-label-text {
+    position: relative;
+    top: 10px;
+}
+
+.transfer-count__filter-checkbox {
+    &:checked{
+        + .transfer-count__filter-checkbox-label {
+            &:before {
+                border: 1px solid $checkbox-checked-color;
+            }
+            &::after {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+//TICKETS
+
+.tickets {
+    grid-column: 2/3;
+    width: 500px;
+    min-height: 184px;
+    user-select: none;
+    padding: 20px;
+}
+
+.tickets__section {
+    // padding: 20px;
+}
+
+.tickets__filter-section {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    padding-bottom: 20px;
+    // padding: 0 20px 20px 20px;
+}
+
+.tickets__filter-radio-button {
+    display: none;
+    &:checked {
+        &:hover{
+            background-color: $checkbox-checked-color;
+        }
+        + .tickets__filter-radio-button--label {
+            background-color: $checkbox-checked-color;
+            color: $activeButtonsDefaultColor;
+        }
+    }
+}
+
+.tickets__filter-radio-button--label {
+    @include tickets__filter-radio-button--text;
+    display: flex;
+    align-items: center;
+    width: 168px;
+    height: 50px;
+    background-color: $content-block-default-color;
+    border: {
+        style: solid;
+        color: #DFE5EC;
+        width: 1px;
+        right: none;
+    }
+    text-align: center;
+    &:hover {
+        background-color: $checkbox-checked-color;
+    }
+    &:first-of-type {
+        border-top-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+    }
+    &:last-of-type {
+        border-right: solid 1px #DFE5EC;
+        border-bottom-right-radius: 7px;
+        border-top-right-radius: 7px;
+    }
+    &:nth-last-of-type(1n) {
+        &:not(:last-of-type) {
+            margin-right: 1px;
+        }
+    }
+}
+
+.tickets__filter-radio-button--label-text {
+   margin: auto;
+}
+
+.tickets__ticket {
+    width: 502px;
+    height: 184px;
+    background-color: $content-block-default-color;
+    margin-bottom: 20px;
+    // padding: 20px;
+}
+
+.ticketHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+}
+
+.ticketPrice {
+
+}
+
+.brandLogo {
+
+}
+
+.visually-hidden {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+  }
+
+  //FOOTER
+
+.footer {
+
+}
+
+.footer__showmore-button {
+    @include buttonDefaultStyle;
+    width: 502px;
+    height: 50px;
+    margin: 0 auto;
+    // background-color: $activeButtonsDefaultColor;
+    // border-style: solid;
+    // border-color: $buttonBordersDefaultColor;
+    border-width: 1px;
 }

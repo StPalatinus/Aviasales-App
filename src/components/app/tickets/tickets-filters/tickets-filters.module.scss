@@ -1,0 +1,103 @@
+@import "../../variables.module.scss";
+
+.tickets__section {
+  // padding: 20px;
+}
+
+.tickets__filter-section {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  align-content: center;
+  padding-bottom: 20px;
+  // width: 100%;
+  // background-color: brown;
+}
+
+.tickets__filter-radio-button {
+  display: none;
+  &:checked {
+    &:hover {
+      background-color: $checkbox-checked-color;
+    }
+    + .tickets__filter-radio-button--label {
+      background-color: $checkbox-checked-color;
+      color: $activeButtonsDefaultColor;
+    }
+  }
+}
+
+.tickets__filter-radio-button--label {
+  @include tickets__filter-radio-button--text;
+  display: flex;
+  align-items: center;
+  width: 33.33%;
+  height: 50px;
+  background-color: $content-block-default-color;
+  border: {
+    style: solid;
+    color: #dfe5ec;
+    width: 1px;
+    right: none;
+  }
+  text-align: center;
+  &:hover {
+    background-color: $checkbox-checked-color;
+  }
+  &:first-of-type {
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+  }
+  &:last-of-type {
+    border-right: solid 1px #dfe5ec;
+    border-bottom-right-radius: 7px;
+    border-top-right-radius: 7px;
+  }
+  &:nth-last-of-type(1n) {
+    &:not(:last-of-type) {
+      margin-right: 1px;
+    }
+  }
+}
+
+.tickets__filter-radio-button--label-text {
+  margin: auto;
+}
+
+@media screen and (min-width: 650px) {
+}
+
+@media screen and (min-width: 850px) {
+  .tickets__filter-radio-button--label {
+    // @include tickets__filter-radio-button--text;
+    // display: flex;
+    // align-items: center;
+    width: 168px;
+    // height: 50px;
+    // background-color: $content-block-default-color;
+    // border: {
+    //   style: solid;
+    //   color: #dfe5ec;
+    //   width: 1px;
+    //   right: none;
+    // }
+    // text-align: center;
+    // &:hover {
+    //   background-color: $checkbox-checked-color;
+    // }
+    // &:first-of-type {
+    //   border-top-left-radius: 7px;
+    //   border-bottom-left-radius: 7px;
+    // }
+    // &:last-of-type {
+    //   border-right: solid 1px #dfe5ec;
+    //   border-bottom-right-radius: 7px;
+    //   border-top-right-radius: 7px;
+    // }
+    // &:nth-last-of-type(1n) {
+    //   &:not(:last-of-type) {
+    //     margin-right: 1px;
+    //   }
+    // }
+  }
+}

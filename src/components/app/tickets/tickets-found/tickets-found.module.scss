@@ -1,0 +1,118 @@
+@import "../../variables.module.scss";
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+.tickets__ticket {
+  width: 100%;
+  height: 184px;
+  background-color: $content-block-default-color;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+.ticketHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ticketPrice {
+  font: 24px/24px $page-default-font-stack {
+    style: normal;
+    weight: 600;
+  }
+  color: $priceEmphasizeDefaultColor;
+}
+
+.brandLogo {
+  position: relative;
+  bottom: 4px;
+}
+
+.ticketInfo__table {
+  position: relative;
+  top: 12px;
+  left: -2px;
+  width: 100%;
+}
+
+.ticketInfo__destinationsHeading,
+.ticketInfo__travelTimeHeading,
+.ticketInfo__transferCountHeading {
+  font: 12px/18px $page-default-font-stack {
+    style: normal;
+    weight: 600;
+  }
+  align-items: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: $ticketInfoHeadingsColor;
+  text-align: left;
+}
+
+.ticketInfo__destinationsHeading {
+  width: 141px;
+}
+
+.ticketInfo__travelTimeHeading {
+  position: relative;
+  left: 8px;
+  width: 141px;
+  text-align: left;
+}
+
+.ticketInfo__transferCountHeading {
+  position: relative;
+  left: 14px;
+  width: 140px;
+  text-align: left;
+}
+
+.ticketInfo__destinations,
+.ticketInfo__travelTime,
+.ticketInfo__transferCount {
+  font: 14px/21px $page-default-font-stack {
+    style: normal;
+    weight: 600;
+  }
+  align-items: center;
+  letter-spacing: 0.5px;
+  color: $ticketInfoDefaultColor;
+  text-align: left;
+}
+
+.ticketInfo__destinations {
+  position: relative;
+  top: -3px;
+}
+
+.ticketInfo__travelTime {
+  position: relative;
+  top: -4px;
+  left: 6px;
+  text-align: left;
+}
+
+.ticketInfo__transferCount {
+  position: relative;
+  left: 14px;
+  top: -3px;
+  text-align: left;
+  //   padding-left: 20px;
+}
+
+@media screen and (min-width: 650px) {
+}
+
+@media screen and (min-width: 850px) {
+  .tickets__ticket {
+    width: 502px;
+  }
+}

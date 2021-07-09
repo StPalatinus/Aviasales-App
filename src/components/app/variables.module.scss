@@ -1,0 +1,68 @@
+$background-dafault-color: #f3f7fa;
+$text-default-color: #4a4a4a;
+$content-block-default-color: #ffffff;
+$checkbox-default-color: #9abbce;
+$checkbox-checked-color: #2196f3;
+$filter-hover-color: #f1fcff;
+$activeButtonsDefaultColor: #ffffff;
+$buttonBordersDefaultColor: #e5e5e5;
+$buttonHoverDefaultColor: #2196f3;
+$priceEmphasizeDefaultColor: #2196f3;
+$ticketInfoHeadingsColor: #a0b0b9;
+$ticketInfoDefaultColor: #4a4a4a;
+
+@font-face {
+  font-family: "Open Sans";
+  src: url(../../fonts/OpenSans-SemiBold.ttf);
+}
+
+$page-default-font-stack: "Open Sans", Arial, Helvetica, sans-serif;
+
+@mixin transfer-count__filter--header-text {
+  color: $text-default-color;
+  text-transform: uppercase;
+  font: 12px/12px $page-default-font-stack {
+    style: normal;
+    weight: 600;
+    family: $page-default-font-stack;
+  }
+}
+
+@mixin transfer-count__filter-list--text {
+  color: $text-default-color;
+  font: 13px/20px $page-default-font-stack {
+    style: normal;
+    weight: normal;
+  }
+}
+
+@mixin tickets__filter-radio-button--text {
+  letter-spacing: 0.5px;
+  font: 12px/20px $page-default-font-stack {
+    style: normal;
+    weight: 600;
+  }
+  text: {
+    align: center;
+    transform: uppercase;
+  }
+}
+
+@mixin buttonDefaultStyle {
+  background-color: $activeButtonsDefaultColor;
+  border-style: solid;
+  border-color: $buttonBordersDefaultColor;
+  border-radius: 5px;
+  user-select: none;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+
+  &:active {
+    color: $activeButtonsDefaultColor;
+    background-color: $buttonHoverDefaultColor;
+  }
+  &:hover {
+    background-color: $buttonHoverDefaultColor;
+  }
+}

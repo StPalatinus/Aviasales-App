@@ -1,10 +1,20 @@
 import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import asideStyles from "./transfer-count.module.scss";
 
-function TransferCount() {
-  const checked = true;
-  const unchecked = false;
-
+function TransferCount({
+  withoutChange,
+  toggleAllFilters,
+  oneChange,
+  twoChanges,
+  threeChanges,
+  allFiltersFlag,
+  toggleWithoutChange,
+  toggleOneChange,
+  toggleTwoChanges,
+  toggleThreeChanges,
+}) {
   return (
     <aside className={asideStyles["transfer-count"]}>
       <h1 className={asideStyles["transfer-count__header"]}>
@@ -14,13 +24,13 @@ function TransferCount() {
         <input
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
-          checked={unchecked}
-          onChange={() => {}}
-          id="all"
+          checked={allFiltersFlag}
+          onChange={toggleAllFilters}
+          id="allflags"
         />
         <label
           className={asideStyles["transfer-count__filter-checkbox-label"]}
-          htmlFor="all"
+          htmlFor="allflags"
         >
           <span
             className={
@@ -33,8 +43,8 @@ function TransferCount() {
         <input
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
-          checked={checked}
-          onChange={() => {}}
+          checked={withoutChange}
+          onChange={toggleWithoutChange}
           id="withoutChange"
         />
         <label
@@ -52,8 +62,8 @@ function TransferCount() {
         <input
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
-          checked={checked}
-          onChange={() => {}}
+          checked={oneChange}
+          onChange={toggleOneChange}
           id="oneChange"
         />
         <label
@@ -71,8 +81,8 @@ function TransferCount() {
         <input
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
-          checked={checked}
-          onChange={() => {}}
+          checked={twoChanges}
+          onChange={toggleTwoChanges}
           id="twoChanges"
         />
         <label
@@ -90,8 +100,8 @@ function TransferCount() {
         <input
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
-          checked={unchecked}
-          onChange={() => {}}
+          checked={threeChanges}
+          onChange={toggleThreeChanges}
           id="threeChanges"
         />
         <label
@@ -111,4 +121,33 @@ function TransferCount() {
   );
 }
 
-export default TransferCount;
+const mapStateToProps = (state) => ({
+  allFiltersFlag: state.allFiltersFlag,
+  withoutChange: state.withoutChange,
+  oneChange: state.oneChange,
+  twoChanges: state.twoChanges,
+  threeChanges: state.threeChanges,
+});
+
+const matDispatchToProps = (dispatch) => ({
+  toggleAllFilters: () => dispatch({ type: "toggleAllFilters" }),
+  toggleWithoutChange: () => dispatch({ type: "toggleWithoutChange" }),
+  toggleOneChange: () => dispatch({ type: "toggleOneChange" }),
+  toggleTwoChanges: () => dispatch({ type: "toggleTwoChanges" }),
+  toggleThreeChanges: () => dispatch({ type: "toggleThreeChanges" }),
+});
+
+TransferCount.propTypes = {
+  allFiltersFlag: PropTypes.bool.isRequired,
+  withoutChange: PropTypes.bool.isRequired,
+  oneChange: PropTypes.bool.isRequired,
+  twoChanges: PropTypes.bool.isRequired,
+  threeChanges: PropTypes.bool.isRequired,
+  toggleAllFilters: PropTypes.func.isRequired,
+  toggleWithoutChange: PropTypes.func.isRequired,
+  toggleOneChange: PropTypes.func.isRequired,
+  toggleTwoChanges: PropTypes.func.isRequired,
+  toggleThreeChanges: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, matDispatchToProps)(TransferCount);

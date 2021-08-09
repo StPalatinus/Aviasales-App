@@ -1,15 +1,19 @@
 import React from "react";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import asideStyles from "./transfer-count.module.scss";
+import * as actions from "../../actions";
+
+// console.log(toggleAllFlags);
 
 function TransferCount({
   withoutChange,
-  toggleAllFilters,
   oneChange,
   twoChanges,
   threeChanges,
   allFiltersFlag,
+  toggleAllFlags,
   toggleWithoutChange,
   toggleOneChange,
   toggleTwoChanges,
@@ -25,7 +29,7 @@ function TransferCount({
           className={asideStyles["transfer-count__filter-checkbox"]}
           type="checkbox"
           checked={allFiltersFlag}
-          onChange={toggleAllFilters}
+          onChange={toggleAllFlags}
           id="allflags"
         />
         <label
@@ -129,13 +133,23 @@ const mapStateToProps = (state) => ({
   threeChanges: state.threeChanges,
 });
 
-const matDispatchToProps = (dispatch) => ({
-  toggleAllFilters: () => dispatch({ type: "toggleAllFilters" }),
-  toggleWithoutChange: () => dispatch({ type: "toggleWithoutChange" }),
-  toggleOneChange: () => dispatch({ type: "toggleOneChange" }),
-  toggleTwoChanges: () => dispatch({ type: "toggleTwoChanges" }),
-  toggleThreeChanges: () => dispatch({ type: "toggleThreeChanges" }),
-});
+const mapDispatchToProps = (dispatch) => {
+  const {
+    toggleAllFlags,
+    toggleWithoutChange,
+    toggleOneChange,
+    toggleTwoChanges,
+    toggleThreeChanges,
+  } = bindActionCreators(actions, dispatch);
+
+  return {
+    toggleAllFlags,
+    toggleWithoutChange,
+    toggleOneChange,
+    toggleTwoChanges,
+    toggleThreeChanges,
+  };
+};
 
 TransferCount.propTypes = {
   allFiltersFlag: PropTypes.bool.isRequired,
@@ -143,11 +157,11 @@ TransferCount.propTypes = {
   oneChange: PropTypes.bool.isRequired,
   twoChanges: PropTypes.bool.isRequired,
   threeChanges: PropTypes.bool.isRequired,
-  toggleAllFilters: PropTypes.func.isRequired,
+  toggleAllFlags: PropTypes.func.isRequired,
   toggleWithoutChange: PropTypes.func.isRequired,
   toggleOneChange: PropTypes.func.isRequired,
   toggleTwoChanges: PropTypes.func.isRequired,
   toggleThreeChanges: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, matDispatchToProps)(TransferCount);
+export default connect(mapStateToProps, mapDispatchToProps)(TransferCount);

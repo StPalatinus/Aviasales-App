@@ -8,6 +8,17 @@
   margin: -1px;
 }
 
+.ticketsSpinner {
+  display: block;
+  width: 50%;
+  height: 140px;
+  object-fit: scale-down;
+  margin: 0 auto;
+  padding: 0;
+  padding-bottom: 20px;
+  user-select: none;
+}
+
 .tickets__ticket {
   width: 100%;
   height: 184px;

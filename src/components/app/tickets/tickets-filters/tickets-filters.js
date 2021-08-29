@@ -1,7 +1,7 @@
 import React from "react";
 import tickersFiltersStyles from "./tickets-filters.module.scss";
 
-function TickersFilters() {
+function TicketsFilters() {
   return (
     <form className={tickersFiltersStyles["tickets__filter-section"]}>
       <input
@@ -65,4 +65,4 @@ function TickersFilters() {
   );
 }
 
-export default TickersFilters;
+export default TicketsFilters;

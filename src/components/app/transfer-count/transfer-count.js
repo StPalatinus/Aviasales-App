@@ -3,9 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import asideStyles from "./transfer-count.module.scss";
-import * as actions from "../../actions";
-
-// console.log(toggleAllFlags);
+import actions from "../../../actions";
 
 function TransferCount({
   withoutChange,
@@ -126,11 +124,11 @@ function TransferCount({
 }
 
 const mapStateToProps = (state) => ({
-  allFiltersFlag: state.allFiltersFlag,
-  withoutChange: state.withoutChange,
-  oneChange: state.oneChange,
-  twoChanges: state.twoChanges,
-  threeChanges: state.threeChanges,
+  allFiltersFlag: state.flagsReducer.allFiltersFlag,
+  withoutChange: state.flagsReducer.withoutChange,
+  oneChange: state.flagsReducer.oneChange,
+  twoChanges: state.flagsReducer.twoChanges,
+  threeChanges: state.flagsReducer.threeChanges,
 });
 
 const mapDispatchToProps = (dispatch) => {

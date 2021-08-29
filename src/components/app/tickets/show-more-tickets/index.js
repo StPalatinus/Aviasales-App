@@ -1,3 +1,3 @@
-import showMoreTickets from "./show-more-tickets";
+import ShowMoreTickets from "./show-more-tickets";
 
-export default showMoreTickets;
+export default ShowMoreTickets;

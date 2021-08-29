@@ -1,37 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
+import { applyMiddleware, createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import reduxThunk from "redux-thunk";
 
 import "./index.scss";
 import App from "./components/app";
-import reducer from "./components/reducer";
-// import * as actions from "./components/actions";
+import mainReducer from "./reducers/main_reducer";
+import transferFlagsReducer from "./reducers/transfer_flags_reducer";
 
-const store = createStore(reducer);
-// const { dispatch } = store;
+const reducer = combineReducers({
+  mainReducer,
+  flagsReducer: transferFlagsReducer,
+});
 
-// store.subscribe(() => {
-//   console.log(store.getState().counter);
-//   console.log(store.getState().someData);
-// });
+const loggerMiddleware = (store) => (next) => (action) => {
+  const result = next(action);
+  console.log("Middleware", store.getState());
+  return result;
+};
 
-// const { testAction1, testAction2 } = bindActionCreators(actions, dispatch);
-
-// const payload = "test_1";
-// testAction1(payload);
-// const payload2 = "test_2";
-// testAction2(payload2);
+const store = createStore(
+  reducer,
+  applyMiddleware(loggerMiddleware, reduxThunk)
+);
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-      // testAction1 = {testAction1}
-      // testAction2 = {testAction2}
-      // payload = {payload}
-      // payload2 = {payload2}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

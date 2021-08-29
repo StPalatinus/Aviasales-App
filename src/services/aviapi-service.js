@@ -1,13 +1,23 @@
+/* eslint consistent-return: "off" */
 const BASE_URL = "https://front-test.beta.aviasales.ru";
+
+const isJsonValid = (testData) => {
+  try {
+    JSON.stringify(testData);
+  } catch (err) {
+    return false;
+  }
+  return true;
+};
 
 class AviApiService {
   async getSearchID() {
-    const searchIDUrl = `${BASE_URL}/search`;
-    const response = await fetch(searchIDUrl);
+    const searchIdUrl = `${BASE_URL}/search`;
+    const response = await fetch(searchIdUrl);
 
     if (!response.ok) {
       throw new Error(
-        `Could not receive data from ${searchIDUrl} , received ${response.status}`
+        `Could not receive data from ${searchIdUrl} , received ${response.status}`
       );
     }
 
@@ -17,48 +27,72 @@ class AviApiService {
 
   async getTickets() {
     let trie = 0;
+    let body;
     // let parts = 0;
     const allTickets = [];
     const searchId = await this.getSearchID();
     const ticketsURL = `${BASE_URL}/tickets?searchId=${searchId}`;
 
     const getTicketsPack = async () => {
-      const response = await fetch(ticketsURL);
+      try {
+        const response = await fetch(ticketsURL);
 
-      if (!response.ok) {
-        trie += 1;
-        // console.log(`trie No:${trie}`);
-        // console.log(`calling again`);
-        // console.log(`response.status: ${response.status}`);
-        await getTicketsPack();
-        return undefined;
-      }
+        if (!response.ok) {
+          trie += 1;
+          // console.log(`trie No:${trie}`);
+          // console.log(`calling again`);
+          // console.log(`response.status: ${response.status}`);
+          // console.log(allTickets);
+          allTickets.push(...[]);
+          // console.log(allTickets);
+          await getTicketsPack();
+          return;
+        }
 
-      if (trie === 3) {
-        // console.log(`${trie} tries and no response, terminating`);
+        if (trie === 3) {
+          // console.log(`${trie} tries and no response, terminating`);
+          // trie = 0;
+          // throw new Error(
+          //   `make ${trie} tries. Could not receive data from ${ticketsURL} , received ${response.status}`
+          // );
+          console.log(
+            `make ${trie} tries. Could not receive data from ${ticketsURL} , received ${response.status}`
+          );
+          allTickets.push(...[]);
+          return;
+        }
+
         trie = 0;
-        throw new Error(
-          `Could not receive data from ${ticketsURL} , received ${response.status}`
-        );
-      }
+        body = await response.json();
 
-      trie = 0;
-      const body = await response.json();
+        if (isJsonValid(body)) {
+          console.log("VALID");
+        } else {
+          console.log("INVALID");
+        }
 
-      if (body.stop !== true) {
-        // parts +=1;
         allTickets.push(...body.tickets);
-        // console.log(body);
-        await getTicketsPack();
-      }
+        // console.log(body.tickets);
 
-      // console.log(body);
+        if (body.stop !== true) {
+          // parts +=1;
+          // console.log(body);
+          await getTicketsPack();
+        }
+
+        // console.log(body);
+      } catch (err) {
+        console.log(err);
+        throw new Error(err);
+      }
       return body;
     };
 
-    const result = await getTicketsPack();
+    await getTicketsPack();
 
-    allTickets.push(...result.tickets);
+    // console.log(allTickets);
+    // allTickets.push(...result.tickets);
+    // console.log(allTickets);
     // console.log(result.stop);
 
     // console.log(`${parts} array parts recieved`);

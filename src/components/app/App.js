@@ -1,60 +1,72 @@
 import React from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
+import { connect } from "react-redux";
 import appStyles from "./App.module.scss";
 import Header from "./header";
 import TransferCount from "./transfer-count";
-import TickersFilters from "./tickets/tickets-filters";
-import TickersFound from "./tickets/tickets-found";
+import TicketsFilters from "./tickets/tickets-filters";
+import TicketsFound from "./tickets/tickets-found";
 import ShowMoreTickets from "./tickets/show-more-tickets";
-import aviApiService from "../../services";
+import actions from "../../actions";
 
-function App() {
+function App({
+  getTicketsFromServer,
+  isLoading,
+  error,
+  visibleTickets,
+  tickets,
+}) {
   App.dafeultProps = {};
 
-  const getTickets = async () => {
-    const tickets = await aviApiService.getTickets();
+  const hasData = !(isLoading || error);
 
-    console.log(tickets);
-    return tickets;
-  };
-
-  // const payload = "test_1";
-  // props.testAction1(payload);
-  // const payload2 = "test_2";
-  // props.testAction2(payload2);
-
-  // console.log(props.testAction1(props.payload));
-  // console.log(props.testAction2(props.payload2));
   React.useEffect(() => {
-    getTickets();
-
-    // console.log(props.testAction1(props.payload));
-    // console.log(props.testAction2(props.payload2));
-
-    // console.log(props.payload);
-    // console.log(props.payload2);
+    getTicketsFromServer();
   }, []);
 
   return (
     <section className={appStyles.App}>
-      <Header />
+      <Header hasData={hasData} />
       <TransferCount />
 
       <main className={appStyles.tickets}>
-        <TickersFilters />
-        <TickersFound />
+        <TicketsFilters />
+        <TicketsFound
+          hasData={hasData}
+          visibleTickets={visibleTickets}
+          tickets={tickets}
+          isLoading={isLoading}
+          error={error}
+        />
         <ShowMoreTickets />
       </main>
     </section>
   );
 }
 
-// App.propTypes = {
-//   testAction1: PropTypes.func.isRequired,
-//   testAction2: PropTypes.func.isRequired,
-//   payload: PropTypes.string.isRequired,
-//   payload2: PropTypes.string.isRequired,
-// };
+const mapStateToProps = (state) => ({
+  isLoading: state.mainReducer.isLoading,
+  error: state.mainReducer.error,
+  visibleTickets: state.mainReducer.visibleTickets,
+  tickets: state.mainReducer.tickets,
+});
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  const { getTicketsFromServer } = bindActionCreators(actions, dispatch);
+
+  return {
+    getTicketsFromServer,
+  };
+};
+
+App.propTypes = {
+  getTicketsFromServer: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  error: PropTypes.bool.isRequired,
+  visibleTickets: PropTypes.number.isRequired,
+  tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

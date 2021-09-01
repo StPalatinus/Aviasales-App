@@ -124,11 +124,11 @@ function TransferCount({
 }
 
 const mapStateToProps = (state) => ({
-  allFiltersFlag: state.flagsReducer.allFiltersFlag,
-  withoutChange: state.flagsReducer.withoutChange,
-  oneChange: state.flagsReducer.oneChange,
-  twoChanges: state.flagsReducer.twoChanges,
-  threeChanges: state.flagsReducer.threeChanges,
+  allFiltersFlag: state.transferFlagsReducer.allFiltersFlag,
+  withoutChange: state.transferFlagsReducer.withoutChange,
+  oneChange: state.transferFlagsReducer.oneChange,
+  twoChanges: state.transferFlagsReducer.twoChanges,
+  threeChanges: state.transferFlagsReducer.threeChanges,
 });
 
 const mapDispatchToProps = (dispatch) => {

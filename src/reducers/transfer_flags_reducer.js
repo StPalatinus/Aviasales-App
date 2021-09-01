@@ -24,6 +24,7 @@ const transferFlagsReducer = (state = initialState, action) => {
     ) {
       changedState.allFiltersFlag = true;
     }
+    return changedState;
   };
 
   switch (action.type) {
@@ -60,7 +61,7 @@ const transferFlagsReducer = (state = initialState, action) => {
       return nextState;
 
     case "getTicketsStarted":
-      nextState.loading = true;
+      // nextState.isLoading = true;
       return nextState;
 
     default:

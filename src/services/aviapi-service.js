@@ -66,13 +66,13 @@ class AviApiService {
         body = await response.json();
 
         if (isJsonValid(body)) {
-          console.log("VALID");
+          allTickets.push(...body.tickets);
         } else {
-          console.log("INVALID");
+          throw new Error();
         }
 
-        allTickets.push(...body.tickets);
-        // console.log(body.tickets);
+        // allTickets.push(...body.tickets);
+        // // console.log(body.tickets);
 
         if (body.stop !== true) {
           // parts +=1;

@@ -2,6 +2,8 @@ import React from "react";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import format from "date-fns/format";
+import { ru } from "date-fns/locale";
 import actions from "../../../../actions";
 import tickersFoundStyles from "./tickets-found.module.scss";
 import S7Logo from "../../../../img/brands/S7_Logo.svg";
@@ -30,18 +32,57 @@ function TicketsFound(props) {
     return spiners;
   };
 
+  const formatDate = (date, duration) => {
+    const startDateInSeconds = Date.parse(date);
+    const durationInSeconds = startDateInSeconds + duration * 60;
+
+    const startTime = format(startDateInSeconds, "HH:MM", { locale: ru });
+    const endTime = format(startDateInSeconds - durationInSeconds, "HH:MM", {
+      locale: ru,
+    });
+
+    const res = `${startTime} - ${endTime}`;
+
+    return res;
+  };
+
   const workTickets = props.tickets.slice(0, props.visibleTickets);
-  console.log(workTickets);
+  // console.log(workTickets);
 
   const recievedTickets = hasData
     ? workTickets.map((currentTicket) => {
-        console.log(hasData);
-        console.log(currentTicket);
+        // console.log(currentTicket);
+
+        const formatDuration = (duration) => {
+          const hours = Math.trunc(duration / 60);
+          const minutes = duration % 60;
+          return `${hours}ч ${minutes}м`;
+        };
+
+        const formatTransferCount = (transfersArr) => {
+          switch (true) {
+            case transfersArr === 0:
+              return `без пересадок`;
+            case transfersArr === 1:
+              return `1 пересадка`;
+            case transfersArr === 2:
+            case transfersArr === 3:
+            case transfersArr === 4:
+              return `${transfersArr} пересадки`;
+            default:
+              return `${transfersArr} пересадок`;
+          }
+        };
+
+        const firstSegment = `${currentTicket.segments[0].origin} - ${currentTicket.segments[0].destination}`;
+        const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
 
         return (
           <div className={tickersFoundStyles.tickets__ticket}>
             <div className={tickersFoundStyles.ticketHeader}>
-              <div className={tickersFoundStyles.ticketPrice}>13 400 Р</div>
+              <div className={tickersFoundStyles.ticketPrice}>
+                {currentTicket.price} Р
+              </div>
               <img
                 className={tickersFoundStyles.brandLogo}
                 src={S7Logo}
@@ -57,7 +98,7 @@ function TicketsFound(props) {
                         tickersFoundStyles.ticketInfo__destinationsHeading
                       }
                     >
-                      MOW – HKT
+                      {firstSegment}
                     </td>
                     <td
                       className={
@@ -71,15 +112,20 @@ function TicketsFound(props) {
                         tickersFoundStyles.ticketInfo__transferCountHeading
                       }
                     >
-                      2 пересадки
+                      {formatTransferCount(
+                        currentTicket.segments[0].stops.length
+                      )}
                     </td>
                   </tr>
                   <tr>
                     <td className={tickersFoundStyles.ticketInfo__destinations}>
-                      10:45 – 08:00
+                      {formatDate(
+                        currentTicket.segments[0].date,
+                        currentTicket.segments[0].duration
+                      )}
                     </td>
                     <td className={tickersFoundStyles.ticketInfo__travelTime}>
-                      21ч 15м
+                      {formatDuration(currentTicket.segments[0].duration)}
                     </td>
                     <td
                       className={tickersFoundStyles.ticketInfo__transferCount}
@@ -93,7 +139,7 @@ function TicketsFound(props) {
                         tickersFoundStyles.ticketInfo__destinationsHeading
                       }
                     >
-                      MOW – HKT
+                      {secondSegment}
                     </td>
                     <td
                       className={
@@ -112,10 +158,13 @@ function TicketsFound(props) {
                   </tr>
                   <tr>
                     <td className={tickersFoundStyles.ticketInfo__destinations}>
-                      11:20 – 00:50
+                      {formatDate(
+                        currentTicket.segments[1].date,
+                        currentTicket.segments[1].duration
+                      )}
                     </td>
                     <td className={tickersFoundStyles.ticketInfo__travelTime}>
-                      13ч 30м
+                      {formatDuration(currentTicket.segments[1].duration)}
                     </td>
                     <td
                       className={tickersFoundStyles.ticketInfo__transferCount}

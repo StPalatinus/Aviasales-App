@@ -21,7 +21,6 @@ function Header(props) {
       />
     </header>
   );
-  console.log(props.hasData);
   return <>{loadingAnimatedHeader}</>;
 }
 

@@ -17,6 +17,12 @@ function App({
   error,
   visibleTickets,
   tickets,
+  choseCheapest,
+  choseFastest,
+  choseOptimal,
+  selectCheapest,
+  selectFastest,
+  selectOptimal,
 }) {
   App.dafeultProps = {};
 
@@ -32,7 +38,14 @@ function App({
       <TransferCount />
 
       <main className={appStyles.tickets}>
-        <TicketsFilters />
+        <TicketsFilters
+          choseCheapest={choseCheapest}
+          choseFastest={choseFastest}
+          choseOptimal={choseOptimal}
+          selectCheapest={selectCheapest}
+          selectFastest={selectFastest}
+          selectOptimal={selectOptimal}
+        />
         <TicketsFound
           hasData={hasData}
           visibleTickets={visibleTickets}
@@ -51,13 +64,20 @@ const mapStateToProps = (state) => ({
   error: state.mainReducer.error,
   visibleTickets: state.mainReducer.visibleTickets,
   tickets: state.mainReducer.tickets,
+  choseCheapest: state.filtersReducer.choseCheapest,
+  choseFastest: state.filtersReducer.choseFastest,
+  choseOptimal: state.filtersReducer.choseOptimal,
 });
 
 const mapDispatchToProps = (dispatch) => {
-  const { getTicketsFromServer } = bindActionCreators(actions, dispatch);
+  const { getTicketsFromServer, selectCheapest, selectFastest, selectOptimal } =
+    bindActionCreators(actions, dispatch);
 
   return {
     getTicketsFromServer,
+    selectCheapest,
+    selectFastest,
+    selectOptimal,
   };
 };
 
@@ -67,6 +87,12 @@ App.propTypes = {
   error: PropTypes.bool.isRequired,
   visibleTickets: PropTypes.number.isRequired,
   tickets: PropTypes.arrayOf(PropTypes.object).isRequired,
+  choseCheapest: PropTypes.bool.isRequired,
+  choseFastest: PropTypes.bool.isRequired,
+  choseOptimal: PropTypes.bool.isRequired,
+  selectCheapest: PropTypes.func.isRequired,
+  selectFastest: PropTypes.func.isRequired,
+  selectOptimal: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

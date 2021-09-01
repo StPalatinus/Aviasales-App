@@ -6,6 +6,10 @@ export const toggleOneChange = () => ({ type: "toggleOneChange" });
 export const toggleTwoChanges = () => ({ type: "toggleTwoChanges" });
 export const toggleThreeChanges = () => ({ type: "toggleThreeChanges" });
 
+export const selectCheapest = () => ({ type: "selectCheapest" });
+export const selectFastest = () => ({ type: "selectFastest" });
+export const selectOptimal = () => ({ type: "selectOptimal" });
+
 export const getTicketsStarted = () => ({ type: "getTicketsStarted" });
 export const getTicketsSuccess = (payload) => ({
   type: "getTicketsSuccess",

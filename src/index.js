@@ -8,10 +8,12 @@ import "./index.scss";
 import App from "./components/app";
 import mainReducer from "./reducers/main_reducer";
 import transferFlagsReducer from "./reducers/transfer_flags_reducer";
+import filtersReducer from "./reducers/filters_reducer";
 
 const reducer = combineReducers({
   mainReducer,
-  flagsReducer: transferFlagsReducer,
+  transferFlagsReducer,
+  filtersReducer,
 });
 
 const loggerMiddleware = (store) => (next) => (action) => {

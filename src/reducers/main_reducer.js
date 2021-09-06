@@ -9,9 +9,6 @@ const mainReducer = (state = initialState, action) => {
   const nextState = { ...state };
 
   switch (action.type) {
-    // case "checkisLoadingStatus"
-    //   return state.isLoading;
-
     case "getTicketsStarted":
       nextState.isLoading = true;
       return nextState;

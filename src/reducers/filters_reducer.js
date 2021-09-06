@@ -1,7 +1,7 @@
 const initialState = {
-  choseCheapest: false,
+  choseCheapest: true,
   choseFastest: false,
-  choseOptimal: true,
+  choseOptimal: false,
 };
 
 const uncheckAll = (changedState) => {

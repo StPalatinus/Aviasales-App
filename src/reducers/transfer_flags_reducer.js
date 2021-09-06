@@ -1,9 +1,9 @@
 const initialState = {
-  allFiltersFlag: false,
-  withoutChange: false,
-  oneChange: false,
-  twoChanges: false,
-  threeChanges: false,
+  allFiltersFlag: true,
+  withoutChange: true,
+  oneChange: true,
+  twoChanges: true,
+  threeChanges: true,
 };
 
 const transferFlagsReducer = (state = initialState, action) => {
@@ -61,7 +61,6 @@ const transferFlagsReducer = (state = initialState, action) => {
       return nextState;
 
     case "getTicketsStarted":
-      // nextState.isLoading = true;
       return nextState;
 
     default:

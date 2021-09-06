@@ -13,6 +13,7 @@ import actions from "../../actions";
 
 function App({
   getTicketsFromServer,
+  showFiveMoreTickets,
   isLoading,
   error,
   visibleTickets,
@@ -23,6 +24,11 @@ function App({
   selectCheapest,
   selectFastest,
   selectOptimal,
+  allFiltersFlag,
+  withoutChange,
+  oneChange,
+  twoChanges,
+  threeChanges,
 }) {
   App.dafeultProps = {};
 
@@ -30,7 +36,7 @@ function App({
 
   React.useEffect(() => {
     getTicketsFromServer();
-  }, []);
+  }, [getTicketsFromServer]);
 
   return (
     <section className={appStyles.App}>
@@ -52,6 +58,16 @@ function App({
           tickets={tickets}
           isLoading={isLoading}
           error={error}
+          choseCheapest={choseCheapest}
+          choseFastest={choseFastest}
+          choseOptimal={choseOptimal}
+          allFiltersFlag={allFiltersFlag}
+          withoutChange={withoutChange}
+          oneChange={oneChange}
+          twoChanges={twoChanges}
+          threeChanges={threeChanges}
+          getTicketsFromServer={getTicketsFromServer}
+          showFiveMoreTickets={showFiveMoreTickets}
         />
         <ShowMoreTickets />
       </main>
@@ -67,14 +83,25 @@ const mapStateToProps = (state) => ({
   choseCheapest: state.filtersReducer.choseCheapest,
   choseFastest: state.filtersReducer.choseFastest,
   choseOptimal: state.filtersReducer.choseOptimal,
+  allFiltersFlag: state.transferFlagsReducer.allFiltersFlag,
+  withoutChange: state.transferFlagsReducer.withoutChange,
+  oneChange: state.transferFlagsReducer.oneChange,
+  twoChanges: state.transferFlagsReducer.twoChanges,
+  threeChanges: state.transferFlagsReducer.threeChanges,
 });
 
 const mapDispatchToProps = (dispatch) => {
-  const { getTicketsFromServer, selectCheapest, selectFastest, selectOptimal } =
-    bindActionCreators(actions, dispatch);
+  const {
+    getTicketsFromServer,
+    showFiveMoreTickets,
+    selectCheapest,
+    selectFastest,
+    selectOptimal,
+  } = bindActionCreators(actions, dispatch);
 
   return {
     getTicketsFromServer,
+    showFiveMoreTickets,
     selectCheapest,
     selectFastest,
     selectOptimal,
@@ -83,6 +110,7 @@ const mapDispatchToProps = (dispatch) => {
 
 App.propTypes = {
   getTicketsFromServer: PropTypes.func.isRequired,
+  showFiveMoreTickets: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
   error: PropTypes.bool.isRequired,
   visibleTickets: PropTypes.number.isRequired,
@@ -93,6 +121,11 @@ App.propTypes = {
   selectCheapest: PropTypes.func.isRequired,
   selectFastest: PropTypes.func.isRequired,
   selectOptimal: PropTypes.func.isRequired,
+  allFiltersFlag: PropTypes.bool.isRequired,
+  withoutChange: PropTypes.bool.isRequired,
+  oneChange: PropTypes.bool.isRequired,
+  twoChanges: PropTypes.bool.isRequired,
+  threeChanges: PropTypes.bool.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

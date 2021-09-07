@@ -82,17 +82,7 @@ function TicketsFound(props) {
       locale: ru,
     });
 
-    console.log(startDateInMiliseconds);
-    console.log(durationInMiliseconds);
-    console.log(startTime);
-    console.log(endTime);
-
     const res = `${startTime} - ${endTime}`;
-    // const test = formatDistance(startDateInMiliseconds, durationInMiliseconds, "HH:MM", {
-    //   locale: ru,
-    // })
-
-    // return test;
     return res;
   };
 

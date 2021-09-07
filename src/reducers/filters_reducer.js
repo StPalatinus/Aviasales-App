@@ -1,5 +1,5 @@
 const initialState = {
-  choseCheapest: true,
+  choseCheapest: false,
   choseFastest: false,
   choseOptimal: false,
 };

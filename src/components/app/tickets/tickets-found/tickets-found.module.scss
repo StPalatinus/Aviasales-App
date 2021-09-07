@@ -19,6 +19,10 @@
   user-select: none;
 }
 
+.tickets__section {
+  min-height: 21px;
+}
+
 .tickets__ticket {
   width: 100%;
   height: 184px;
@@ -116,10 +120,12 @@
   left: 14px;
   top: -3px;
   text-align: left;
-  //   padding-left: 20px;
 }
 
 @media screen and (min-width: 650px) {
+  .tickets__section {
+    min-height: calc(100vh - 255px);
+  }
 }
 
 @media screen and (min-width: 850px) {

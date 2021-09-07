@@ -5,6 +5,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
 import { ru } from "date-fns/locale";
+import { v4 as uuidv4 } from "uuid";
 import tickersFoundStyles from "./tickets-found.module.scss";
 import S7Logo from "../../../../img/brands/S7_Logo.svg";
 import spinnerGif from "../../../../img/loading_spinner.gif";
@@ -63,7 +64,9 @@ function TicketsFound(props) {
     const spiners = [];
     for (let i = 0; i < times; i++) {
       spiners[i] = (
-        <div className={tickersFoundStyles.tickets__ticket}>{spinner}</div>
+        <div className={tickersFoundStyles.tickets__ticket} key={uuidv4()}>
+          {spinner}
+        </div>
       );
     }
     return spiners;
@@ -128,38 +131,71 @@ function TicketsFound(props) {
 
     const sortByPriority = (unsortedTickets) => {
       let sortedTickets;
-      if (props.choseCheapest) {
-        sortedTickets = unsortedTickets.sort(
-          (prevEl, nextEl) => prevEl.price - nextEl.price
-        );
-        return sortedTickets;
-      }
-      if (props.choseFastest) {
-        sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
-          const firstTicketDuration =
-            prevEl.segments[0].duration + prevEl.segments[1].duration;
-          const secondTicketDuration =
-            nextEl.segments[0].duration + nextEl.segments[1].duration;
-          return firstTicketDuration - secondTicketDuration;
-        });
-        return sortedTickets;
-      }
-      if (props.choseOptimal) {
-        sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
-          const firstTicketPrice = prevEl.price;
-          const secondTicketPrice = nextEl.price;
-          const firstTicketDuration =
-            prevEl.segments[0].duration + prevEl.segments[1].duration;
-          const secondTicketDuration =
-            nextEl.segments[0].duration + nextEl.segments[1].duration;
-          const firstTicketRatio = firstTicketPrice / firstTicketDuration;
-          const secondTicketRatio = secondTicketPrice / secondTicketDuration;
+      switch (true) {
+        case props.choseCheapest:
+          sortedTickets = unsortedTickets.sort(
+            (prevEl, nextEl) => prevEl.price - nextEl.price
+          );
+          return sortedTickets;
+        case props.choseFastest:
+          sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
+            const firstTicketDuration =
+              prevEl.segments[0].duration + prevEl.segments[1].duration;
+            const secondTicketDuration =
+              nextEl.segments[0].duration + nextEl.segments[1].duration;
+            return firstTicketDuration - secondTicketDuration;
+          });
+          return sortedTickets;
+        case props.choseOptimal: {
+          sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
+            const firstTicketPrice = prevEl.price;
+            const secondTicketPrice = nextEl.price;
+            const firstTicketDuration =
+              prevEl.segments[0].duration + prevEl.segments[1].duration;
+            const secondTicketDuration =
+              nextEl.segments[0].duration + nextEl.segments[1].duration;
+            const firstTicketRatio = firstTicketPrice / firstTicketDuration;
+            const secondTicketRatio = secondTicketPrice / secondTicketDuration;
 
-          return firstTicketRatio > secondTicketRatio;
-        });
-        return sortedTickets;
+            return firstTicketRatio - secondTicketRatio;
+          });
+          return sortedTickets;
+        }
+        default:
+          return unsortedTickets;
       }
-      return sortedTickets;
+      // if (props.choseCheapest) {
+      //   sortedTickets = unsortedTickets.sort(
+      //     (prevEl, nextEl) => prevEl.price - nextEl.price
+      //   );
+      //   return sortedTickets;
+      // }
+      // if (props.choseFastest) {
+      //   sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
+      //     const firstTicketDuration =
+      //       prevEl.segments[0].duration + prevEl.segments[1].duration;
+      //     const secondTicketDuration =
+      //       nextEl.segments[0].duration + nextEl.segments[1].duration;
+      //     return firstTicketDuration - secondTicketDuration;
+      //   });
+      //   return sortedTickets;
+      // }
+      // if (props.choseOptimal) {
+      //   sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
+      //     const firstTicketPrice = prevEl.price;
+      //     const secondTicketPrice = nextEl.price;
+      //     const firstTicketDuration =
+      //       prevEl.segments[0].duration + prevEl.segments[1].duration;
+      //     const secondTicketDuration =
+      //       nextEl.segments[0].duration + nextEl.segments[1].duration;
+      //     const firstTicketRatio = firstTicketPrice / firstTicketDuration;
+      //     const secondTicketRatio = secondTicketPrice / secondTicketDuration;
+
+      //     return firstTicketRatio - secondTicketRatio;
+      //   });
+      //   return sortedTickets;
+      // }
+      // return unsortedTickets;
     };
 
     const sortedByTransferTickets = sortByTransfer(ticketsToSort);
@@ -169,14 +205,6 @@ function TicketsFound(props) {
   };
 
   const workTickets = sortTickets(props.tickets).slice(0, props.visibleTickets);
-
-  // useEffect(() => {
-  //   // workTickets = sortTickets(props.tickets).slice(0, props.visibleTickets);
-  // },[props.allFiltersFlag, props.withoutChange, props.oneChange, props.twoChanges, props.threeChanges]);
-
-  if (optionsArr.length === 1 && optionsArr[0] === -1) {
-    return <></>;
-  }
 
   const recievedTickets = hasData
     ? workTickets.map((currentTicket) => {
@@ -205,7 +233,7 @@ function TicketsFound(props) {
         const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
 
         return (
-          <div className={tickersFoundStyles.tickets__ticket}>
+          <div className={tickersFoundStyles.tickets__ticket} key={uuidv4()}>
             <div className={tickersFoundStyles.ticketHeader}>
               <div className={tickersFoundStyles.ticketPrice}>
                 {currentTicket.price} Р
@@ -280,7 +308,6 @@ function TicketsFound(props) {
                         tickersFoundStyles.ticketInfo__transferCountHeading
                       }
                     >
-                      {/* 1 пересадка */}
                       {formatTransferCount(
                         currentTicket.segments[1].stops.length
                       )}
@@ -310,6 +337,18 @@ function TicketsFound(props) {
       })
     : multiplySpiner(props.visibleTickets);
 
+  if (optionsArr.length === 1 && optionsArr[0] === -1) {
+    // return <></>;
+    return (
+      <section className={tickersFoundStyles.tickets__section}>
+        <h1 className={tickersFoundStyles["visually-hidden"]}>
+          подоборка билетов
+        </h1>
+        {recievedTickets}
+      </section>
+    );
+  }
+
   return (
     <section className={tickersFoundStyles.tickets__section}>
       <h1 className={tickersFoundStyles["visually-hidden"]}>
@@ -319,20 +358,6 @@ function TicketsFound(props) {
     </section>
   );
 }
-
-// const mapStateToProps = () => ({});
-
-// const mapDispatchToProps = (dispatch) => {
-//   const { getTicketsFromServer, showFiveMoreTickets } = bindActionCreators(
-//     actions,
-//     dispatch
-//   );
-
-//   return {
-//     getTicketsFromServer,
-//     showFiveMoreTickets,
-//   };
-// };
 
 TicketsFound.propTypes = {
   visibleTickets: PropTypes.number.isRequired,

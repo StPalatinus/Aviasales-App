@@ -69,7 +69,7 @@ function App({
           getTicketsFromServer={getTicketsFromServer}
           showFiveMoreTickets={showFiveMoreTickets}
         />
-        <ShowMoreTickets />
+        <ShowMoreTickets showFiveMoreTickets={showFiveMoreTickets} />
       </main>
     </section>
   );

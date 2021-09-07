@@ -12,8 +12,8 @@ function TicketsFilters(props) {
         id="cheapest"
         value="самый дешевый"
         checked={props.choseCheapest}
+        onChange={() => {}}
         onClick={props.selectCheapest}
-        onSelect={props.selectCheapest}
       />
       <label
         className={tickersFiltersStyles["tickets__filter-radio-button--label"]}
@@ -34,8 +34,8 @@ function TicketsFilters(props) {
         id="fastest"
         value="самый быстрый"
         checked={props.choseFastest}
+        onChange={() => {}}
         onClick={props.selectFastest}
-        onSelect={props.selectFastest}
       />
       <label
         className={tickersFiltersStyles["tickets__filter-radio-button--label"]}
@@ -56,8 +56,8 @@ function TicketsFilters(props) {
         id="optimal"
         value="оптимальный"
         checked={props.choseOptimal}
+        onChange={() => {}}
         onClick={props.selectOptimal}
-        onSelect={props.selectOptimal}
       />
       <label
         className={tickersFiltersStyles["tickets__filter-radio-button--label"]}

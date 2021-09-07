@@ -4,6 +4,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
+// import { formatDistance } from 'date-fns'
 import { ru } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
 import tickersFoundStyles from "./tickets-found.module.scss";
@@ -72,18 +73,33 @@ function TicketsFound(props) {
     return spiners;
   };
 
-  const formatDate = (date, duration) => {
-    const startDateInSeconds = Date.parse(date);
-    const durationInSeconds = startDateInSeconds + duration * 60;
+  const formatTransitTime = (date, duration) => {
+    const startDateInMiliseconds = Date.parse(date);
+    const durationInMiliseconds = startDateInMiliseconds + duration * 60000;
 
-    const startTime = format(startDateInSeconds, "HH:MM", { locale: ru });
-    const endTime = format(startDateInSeconds - durationInSeconds, "HH:MM", {
+    const startTime = format(startDateInMiliseconds, "HH:mm", { locale: ru });
+    const endTime = format(durationInMiliseconds, "HH:mm", {
       locale: ru,
     });
 
-    const res = `${startTime} - ${endTime}`;
+    console.log(startDateInMiliseconds);
+    console.log(durationInMiliseconds);
+    console.log(startTime);
+    console.log(endTime);
 
+    const res = `${startTime} - ${endTime}`;
+    // const test = formatDistance(startDateInMiliseconds, durationInMiliseconds, "HH:MM", {
+    //   locale: ru,
+    // })
+
+    // return test;
     return res;
+  };
+
+  const formatDuration = (duration) => {
+    const hours = Math.trunc(duration / 60);
+    const minutes = duration % 60;
+    return `${hours}ч ${minutes}м`;
   };
 
   const sortTickets = (ticketsToSort) => {
@@ -164,38 +180,6 @@ function TicketsFound(props) {
         default:
           return unsortedTickets;
       }
-      // if (props.choseCheapest) {
-      //   sortedTickets = unsortedTickets.sort(
-      //     (prevEl, nextEl) => prevEl.price - nextEl.price
-      //   );
-      //   return sortedTickets;
-      // }
-      // if (props.choseFastest) {
-      //   sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
-      //     const firstTicketDuration =
-      //       prevEl.segments[0].duration + prevEl.segments[1].duration;
-      //     const secondTicketDuration =
-      //       nextEl.segments[0].duration + nextEl.segments[1].duration;
-      //     return firstTicketDuration - secondTicketDuration;
-      //   });
-      //   return sortedTickets;
-      // }
-      // if (props.choseOptimal) {
-      //   sortedTickets = unsortedTickets.sort((prevEl, nextEl) => {
-      //     const firstTicketPrice = prevEl.price;
-      //     const secondTicketPrice = nextEl.price;
-      //     const firstTicketDuration =
-      //       prevEl.segments[0].duration + prevEl.segments[1].duration;
-      //     const secondTicketDuration =
-      //       nextEl.segments[0].duration + nextEl.segments[1].duration;
-      //     const firstTicketRatio = firstTicketPrice / firstTicketDuration;
-      //     const secondTicketRatio = secondTicketPrice / secondTicketDuration;
-
-      //     return firstTicketRatio - secondTicketRatio;
-      //   });
-      //   return sortedTickets;
-      // }
-      // return unsortedTickets;
     };
 
     const sortedByTransferTickets = sortByTransfer(ticketsToSort);
@@ -208,12 +192,6 @@ function TicketsFound(props) {
 
   const recievedTickets = hasData
     ? workTickets.map((currentTicket) => {
-        const formatDuration = (duration) => {
-          const hours = Math.trunc(duration / 60);
-          const minutes = duration % 60;
-          return `${hours}ч ${minutes}м`;
-        };
-
         const formatTransferCount = (transfersArr) => {
           switch (true) {
             case transfersArr === 0:
@@ -274,7 +252,7 @@ function TicketsFound(props) {
                   </tr>
                   <tr>
                     <td className={tickersFoundStyles.ticketInfo__destinations}>
-                      {formatDate(
+                      {formatTransitTime(
                         currentTicket.segments[0].date,
                         currentTicket.segments[0].duration
                       )}
@@ -315,7 +293,7 @@ function TicketsFound(props) {
                   </tr>
                   <tr>
                     <td className={tickersFoundStyles.ticketInfo__destinations}>
-                      {formatDate(
+                      {formatTransitTime(
                         currentTicket.segments[1].date,
                         currentTicket.segments[1].duration
                       )}

@@ -7,7 +7,7 @@ import format from "date-fns/format";
 // import { formatDistance } from 'date-fns'
 import { ru } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
-import tickersFoundStyles from "./tickets-found.module.scss";
+import ticketsFoundStyles from "./tickets-found.module.scss";
 import S7Logo from "../../../../img/brands/S7_Logo.svg";
 import spinnerGif from "../../../../img/loading_spinner.gif";
 
@@ -54,7 +54,7 @@ function TicketsFound(props) {
   const spinner = (
     <div className="spin-wraper">
       <img
-        className={tickersFoundStyles.ticketsSpinner}
+        className={ticketsFoundStyles.ticketsSpinner}
         src={spinnerGif}
         alt="логотип перевозчика"
       />
@@ -65,7 +65,7 @@ function TicketsFound(props) {
     const spiners = [];
     for (let i = 0; i < times; i++) {
       spiners[i] = (
-        <div className={tickersFoundStyles.tickets__ticket} key={uuidv4()}>
+        <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
           {spinner}
         </div>
       );
@@ -201,38 +201,38 @@ function TicketsFound(props) {
         const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
 
         return (
-          <div className={tickersFoundStyles.tickets__ticket} key={uuidv4()}>
-            <div className={tickersFoundStyles.ticketHeader}>
-              <div className={tickersFoundStyles.ticketPrice}>
+          <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
+            <div className={ticketsFoundStyles.ticketHeader}>
+              <div className={ticketsFoundStyles.ticketPrice}>
                 {currentTicket.price} Р
               </div>
               <img
-                className={tickersFoundStyles.brandLogo}
+                className={ticketsFoundStyles.brandLogo}
                 src={S7Logo}
                 alt="логотип перевозчика"
               />
             </div>
             <div>
-              <table className={tickersFoundStyles.ticketInfo__table}>
+              <table className={ticketsFoundStyles.ticketInfo__table}>
                 <tbody>
                   <tr>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__destinationsHeading
+                        ticketsFoundStyles.ticketInfo__destinationsHeading
                       }
                     >
                       {firstSegment}
                     </td>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__travelTimeHeading
+                        ticketsFoundStyles.ticketInfo__travelTimeHeading
                       }
                     >
                       В пути
                     </td>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__transferCountHeading
+                        ticketsFoundStyles.ticketInfo__transferCountHeading
                       }
                     >
                       {formatTransferCount(
@@ -241,17 +241,17 @@ function TicketsFound(props) {
                     </td>
                   </tr>
                   <tr>
-                    <td className={tickersFoundStyles.ticketInfo__destinations}>
+                    <td className={ticketsFoundStyles.ticketInfo__destinations}>
                       {formatTransitTime(
                         currentTicket.segments[0].date,
                         currentTicket.segments[0].duration
                       )}
                     </td>
-                    <td className={tickersFoundStyles.ticketInfo__travelTime}>
+                    <td className={ticketsFoundStyles.ticketInfo__travelTime}>
                       {formatDuration(currentTicket.segments[0].duration)}
                     </td>
                     <td
-                      className={tickersFoundStyles.ticketInfo__transferCount}
+                      className={ticketsFoundStyles.ticketInfo__transferCount}
                     >
                       HKG, JNB
                     </td>
@@ -259,21 +259,21 @@ function TicketsFound(props) {
                   <tr>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__destinationsHeading
+                        ticketsFoundStyles.ticketInfo__destinationsHeading
                       }
                     >
                       {secondSegment}
                     </td>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__travelTimeHeading
+                        ticketsFoundStyles.ticketInfo__travelTimeHeading
                       }
                     >
                       В пути
                     </td>
                     <td
                       className={
-                        tickersFoundStyles.ticketInfo__transferCountHeading
+                        ticketsFoundStyles.ticketInfo__transferCountHeading
                       }
                     >
                       {formatTransferCount(
@@ -282,17 +282,17 @@ function TicketsFound(props) {
                     </td>
                   </tr>
                   <tr>
-                    <td className={tickersFoundStyles.ticketInfo__destinations}>
+                    <td className={ticketsFoundStyles.ticketInfo__destinations}>
                       {formatTransitTime(
                         currentTicket.segments[1].date,
                         currentTicket.segments[1].duration
                       )}
                     </td>
-                    <td className={tickersFoundStyles.ticketInfo__travelTime}>
+                    <td className={ticketsFoundStyles.ticketInfo__travelTime}>
                       {formatDuration(currentTicket.segments[1].duration)}
                     </td>
                     <td
-                      className={tickersFoundStyles.ticketInfo__transferCount}
+                      className={ticketsFoundStyles.ticketInfo__transferCount}
                     >
                       HKG
                     </td>
@@ -306,10 +306,9 @@ function TicketsFound(props) {
     : multiplySpiner(props.visibleTickets);
 
   if (optionsArr.length === 1 && optionsArr[0] === -1) {
-    // return <></>;
     return (
-      <section className={tickersFoundStyles.tickets__section}>
-        <h1 className={tickersFoundStyles["visually-hidden"]}>
+      <section className={ticketsFoundStyles.tickets__section}>
+        <h1 className={ticketsFoundStyles["visually-hidden"]}>
           подоборка билетов
         </h1>
         {recievedTickets}
@@ -318,8 +317,8 @@ function TicketsFound(props) {
   }
 
   return (
-    <section className={tickersFoundStyles.tickets__section}>
-      <h1 className={tickersFoundStyles["visually-hidden"]}>
+    <section className={ticketsFoundStyles.tickets__section}>
+      <h1 className={ticketsFoundStyles["visually-hidden"]}>
         подоборка билетов
       </h1>
       {recievedTickets}

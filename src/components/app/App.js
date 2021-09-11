@@ -9,7 +9,7 @@ import TransferCount from "./transfer-count";
 import TicketsFilters from "./tickets/tickets-filters";
 import TicketsFound from "./tickets/tickets-found";
 import ShowMoreTickets from "./tickets/show-more-tickets";
-import actions from "../../actions";
+import actions from "../../redux/actions";
 
 function App({
   getTicketsFromServer,
@@ -69,7 +69,15 @@ function App({
           getTicketsFromServer={getTicketsFromServer}
           showFiveMoreTickets={showFiveMoreTickets}
         />
-        <ShowMoreTickets showFiveMoreTickets={showFiveMoreTickets} />
+        <ShowMoreTickets
+          showFiveMoreTickets={showFiveMoreTickets}
+          hasData={hasData}
+          allFiltersFlag={allFiltersFlag}
+          withoutChange={withoutChange}
+          oneChange={oneChange}
+          twoChanges={twoChanges}
+          threeChanges={threeChanges}
+        />
       </main>
     </section>
   );

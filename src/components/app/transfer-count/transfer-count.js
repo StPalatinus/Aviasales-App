@@ -3,7 +3,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import asideStyles from "./transfer-count.module.scss";
-import actions from "../../../actions";
+import actions from "../../../redux/actions";
 
 function TransferCount({
   withoutChange,

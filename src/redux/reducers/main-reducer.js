@@ -1,3 +1,5 @@
+import { mainReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+
 const initialState = {
   isLoading: false,
   visibleTickets: 5,
@@ -9,7 +11,7 @@ const mainReducer = (state = initialState, action) => {
   const nextState = { ...state };
 
   switch (action.type) {
-    case "getTicketsStarted":
+    case options.getTicketsStarted:
       nextState.isLoading = true;
       return nextState;
 

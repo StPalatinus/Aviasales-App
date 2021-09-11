@@ -1,3 +1,5 @@
+import { filtersReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+
 const initialState = {
   choseCheapest: false,
   choseFastest: false,
@@ -14,17 +16,17 @@ const filtersReducer = (state = initialState, action) => {
   const nextState = { ...state };
 
   switch (action.type) {
-    case "selectCheapest":
+    case options.selectCheapest:
       uncheckAll(nextState);
       nextState.choseCheapest = !state.choseCheapest;
       return nextState;
 
-    case "selectFastest":
+    case options.selectFastest:
       uncheckAll(nextState);
       nextState.choseFastest = !state.choseFastest;
       return nextState;
 
-    case "selectOptimal":
+    case options.selectOptimal:
       uncheckAll(nextState);
       nextState.choseOptimal = !state.choseOptimal;
       return nextState;

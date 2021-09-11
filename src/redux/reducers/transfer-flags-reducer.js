@@ -1,3 +1,5 @@
+import { transferFlagsReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+
 const initialState = {
   allFiltersFlag: true,
   withoutChange: true,
@@ -28,7 +30,7 @@ const transferFlagsReducer = (state = initialState, action) => {
   };
 
   switch (action.type) {
-    case "toggleAllFlags":
+    case options.toggleAllFlags:
       nextState.allFiltersFlag = !nextState.allFiltersFlag;
       nextState.withoutChange = nextState.allFiltersFlag;
       nextState.oneChange = nextState.allFiltersFlag;
@@ -36,31 +38,31 @@ const transferFlagsReducer = (state = initialState, action) => {
       nextState.threeChanges = nextState.allFiltersFlag;
       return nextState;
 
-    case "toggleWithoutChange":
+    case options.toggleWithoutChange:
       optionalUncheckAllFiltersFlag(nextState);
       nextState.withoutChange = !nextState.withoutChange;
       checkAllInclude(nextState);
       return nextState;
 
-    case "toggleOneChange":
+    case options.toggleOneChange:
       optionalUncheckAllFiltersFlag(nextState);
       nextState.oneChange = !nextState.oneChange;
       checkAllInclude(nextState);
       return nextState;
 
-    case "toggleTwoChanges":
+    case options.toggleTwoChanges:
       optionalUncheckAllFiltersFlag(nextState);
       nextState.twoChanges = !nextState.twoChanges;
       checkAllInclude(nextState);
       return nextState;
 
-    case "toggleThreeChanges":
+    case options.toggleThreeChanges:
       optionalUncheckAllFiltersFlag(nextState);
       nextState.threeChanges = !nextState.threeChanges;
       checkAllInclude(nextState);
       return nextState;
 
-    case "getTicketsStarted":
+    case options.getTicketsStarted:
       return nextState;
 
     default:

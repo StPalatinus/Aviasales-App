@@ -3,12 +3,20 @@
 .showMoreButton {
 }
 
+.noTransfgerSelected {
+  margin-top: 50px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .footer__showmore-button {
   @include buttonDefaultStyle;
   width: 100%;
   height: 50px;
   margin: 0 auto;
   border-width: 1px;
+  cursor: pointer;
 }
 
 @media screen and (min-width: 650px) {

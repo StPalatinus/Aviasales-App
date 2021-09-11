@@ -6,9 +6,9 @@ import reduxThunk from "redux-thunk";
 
 import "./index.scss";
 import App from "./components/app";
-import mainReducer from "./reducers/main_reducer";
-import transferFlagsReducer from "./reducers/transfer_flags_reducer";
-import filtersReducer from "./reducers/filters_reducer";
+import mainReducer from "./redux/reducers/main-reducer";
+import transferFlagsReducer from "./redux/reducers/transfer-flags-reducer";
+import filtersReducer from "./redux/reducers/filters-reducer";
 
 const reducer = combineReducers({
   mainReducer,

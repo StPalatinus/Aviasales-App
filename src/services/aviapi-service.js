@@ -1,6 +1,11 @@
 /* eslint consistent-return: "off" */
 const BASE_URL = "https://front-test.beta.aviasales.ru";
 
+const TRIE = {
+  initTrie: 0,
+  lastTrie: 3,
+};
+
 const isJsonValid = (testData) => {
   try {
     JSON.stringify(testData);
@@ -26,7 +31,7 @@ class AviApiService {
   }
 
   async getTickets() {
-    let trie = 0;
+    let trie = TRIE.initTrie;
     let body;
     const allTickets = [];
     const searchId = await this.getSearchID();
@@ -43,12 +48,12 @@ class AviApiService {
           return;
         }
 
-        if (trie === 3) {
+        if (trie === TRIE.lastTrie) {
           allTickets.push(...[]);
           return;
         }
 
-        trie = 0;
+        trie = TRIE.initTrie;
         body = await response.json();
 
         if (isJsonValid(body)) {

@@ -34,18 +34,7 @@ function ShowMoreTickets({
         </div>
       </>
     );
-  return (
-    <>{recievedTickets}</>
-    // <footer className={showMoreTicketsStyles.showMoreButton}>
-    //   <button
-    //     type="button"
-    //     className={showMoreTicketsStyles["footer__showmore-button"]}
-    //     onClick={showFiveMoreTickets}
-    //   >
-    //     Показать еще 5 билетов!
-    //   </button>
-    // </footer>
-  );
+  return <>{recievedTickets}</>;
 }
 
 ShowMoreTickets.propTypes = {

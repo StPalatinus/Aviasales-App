@@ -2,7 +2,7 @@
 const BASE_URL = "https://front-test.beta.aviasales.ru";
 
 const TRIE = {
-  initTrie: 0,
+  initialValue: 0,
   lastTrie: 3,
 };
 
@@ -30,49 +30,43 @@ class AviApiService {
     return body.searchId;
   }
 
-  async getTickets() {
-    let trie = TRIE.initTrie;
+  async getTickets(searchId) {
+    let trie = TRIE.initialValue;
     let body;
-    const allTickets = [];
-    const searchId = await this.getSearchID();
     const ticketsURL = `${BASE_URL}/tickets?searchId=${searchId}`;
 
-    const getTicketsPack = async () => {
+    const getTicketsPack = async (ID) => {
       try {
         const response = await fetch(ticketsURL);
 
+        if (response.status === 404) {
+          return { tickets: [], stop: true };
+        }
+
         if (!response.ok) {
           trie += 1;
-          allTickets.push(...[]);
-          await getTicketsPack();
+          await getTicketsPack(ID);
           return;
         }
 
         if (trie === TRIE.lastTrie) {
-          allTickets.push(...[]);
-          return;
+          return { tickets: [], stop: false };
         }
 
-        trie = TRIE.initTrie;
+        trie = TRIE.initialValue;
         body = await response.json();
 
         if (isJsonValid(body)) {
-          allTickets.push(...body.tickets);
-        } else {
-          throw new Error();
+          return body;
         }
-
-        if (body.stop !== true) {
-          await getTicketsPack();
-        }
+        await getTicketsPack(ID);
       } catch (err) {
         throw new Error(err);
       }
-      return body;
     };
 
-    await getTicketsPack();
-    return allTickets;
+    const ticketsPack = await getTicketsPack(searchId);
+    return ticketsPack;
   }
 }
 

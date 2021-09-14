@@ -15,22 +15,29 @@ const mainReducer = (state = initialState, action) => {
       nextState.isLoading = true;
       return nextState;
 
-    case "getTicketsSuccess": {
+    case options.getFirstTicketsPackSuccess: {
       nextState.tickets = action.payload;
       nextState.isLoading = false;
       nextState.error = false;
       return nextState;
     }
 
-    case "getTicketsError":
+    case options.getOtherTicketsSuccess: {
+      nextState.tickets.push(...action.payload);
       nextState.isLoading = false;
-      nextState.error = action.payload;
+      nextState.error = false;
+      return nextState;
+    }
+
+    case options.getTicketsError:
+      nextState.isLoading = false;
+      nextState.error = true;
       return nextState;
 
-    case "getTicketsFromServer":
+    case options.getTicketsFromServer:
       return nextState;
 
-    case "showFiveMoreTickets": {
+    case options.showFiveMoreTickets: {
       nextState.visibleTickets += 5;
       return nextState;
     }

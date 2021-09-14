@@ -16,15 +16,16 @@ const reducer = combineReducers({
   filtersReducer,
 });
 
-const loggerMiddleware = (store) => (next) => (action) => {
-  const result = next(action);
-  console.log("Middleware", store.getState());
-  return result;
-};
+// const loggerMiddleware = (store) => (next) => (action) => {
+//   const result = next(action);
+//   console.log("Middleware", store.getState());
+//   return result;
+// };
 
 const store = createStore(
   reducer,
-  applyMiddleware(loggerMiddleware, reduxThunk)
+  applyMiddleware(reduxThunk)
+  // applyMiddleware(loggerMiddleware, reduxThunk)
 );
 
 ReactDOM.render(

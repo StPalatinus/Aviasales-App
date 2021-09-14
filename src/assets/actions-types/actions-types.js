@@ -8,7 +8,8 @@ const actionsTypes = {
   selectFastest: "selectFastest",
   selectOptimal: "selectOptimal",
   getTicketsStarted: "getTicketsStarted",
-  getTicketsSuccess: "getTicketsSuccess",
+  getOtherTicketsSuccess: "getOtherTicketsSuccess",
+  getFirstTicketsPackSuccess: "getFirstTicketsPackSuccess",
   getTicketsError: "getTicketsError",
   showFiveMoreTickets: "showFiveMoreTickets",
 };

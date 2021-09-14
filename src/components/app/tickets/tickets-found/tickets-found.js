@@ -4,11 +4,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import format from "date-fns/format";
-// import { formatDistance } from 'date-fns'
 import { ru } from "date-fns/locale";
 import { v4 as uuidv4 } from "uuid";
 import ticketsFoundStyles from "./tickets-found.module.scss";
-import S7Logo from "../../../../img/brands/S7_Logo.svg";
 import spinnerGif from "../../../../img/loading_spinner.gif";
 
 function TicketsFound(props) {
@@ -160,8 +158,12 @@ function TicketsFound(props) {
               prevEl.segments[0].duration + prevEl.segments[1].duration;
             const secondTicketDuration =
               nextEl.segments[0].duration + nextEl.segments[1].duration;
-            const firstTicketRatio = firstTicketPrice / firstTicketDuration;
-            const secondTicketRatio = secondTicketPrice / secondTicketDuration;
+            const firstTicketTransfers = prevEl.segments.length;
+            const secondTicketTransfers = nextEl.segments.length;
+            const firstTicketRatio =
+              firstTicketPrice / firstTicketDuration / secondTicketTransfers;
+            const secondTicketRatio =
+              secondTicketPrice / secondTicketDuration / firstTicketTransfers;
 
             return firstTicketRatio - secondTicketRatio;
           });
@@ -199,7 +201,7 @@ function TicketsFound(props) {
 
         const firstSegment = `${currentTicket.segments[0].origin} - ${currentTicket.segments[0].destination}`;
         const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
-
+        const flyCompanyLogo = `http:////pics.avs.io/99/36/${currentTicket.carrier}.png`;
         return (
           <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
             <div className={ticketsFoundStyles.ticketHeader}>
@@ -208,7 +210,8 @@ function TicketsFound(props) {
               </div>
               <img
                 className={ticketsFoundStyles.brandLogo}
-                src={S7Logo}
+                // src={S7Logo}
+                src={flyCompanyLogo}
                 alt="логотип перевозчика"
               />
             </div>
@@ -253,7 +256,7 @@ function TicketsFound(props) {
                     <td
                       className={ticketsFoundStyles.ticketInfo__transferCount}
                     >
-                      HKG, JNB
+                      {currentTicket.segments[0].stops.join(",")}
                     </td>
                   </tr>
                   <tr>
@@ -294,7 +297,7 @@ function TicketsFound(props) {
                     <td
                       className={ticketsFoundStyles.ticketInfo__transferCount}
                     >
-                      HKG
+                      {currentTicket.segments[1].stops.join(", ")}
                     </td>
                   </tr>
                 </tbody>

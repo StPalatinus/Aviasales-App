@@ -4,6 +4,8 @@ export const mainReducerOptions = {
   getTicketsError: "getTicketsError",
   getTicketsFromServer: "getTicketsFromServer",
   showFiveMoreTickets: "showFiveMoreTickets",
+  getFirstTicketsPackSuccess: "getFirstTicketsPackSuccess",
+  getOtherTicketsSuccess: "getOtherTicketsSuccess",
 };
 
 export const filtersReducerOptions = {

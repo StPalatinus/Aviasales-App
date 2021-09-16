@@ -77,6 +77,7 @@ function App({
           oneChange={oneChange}
           twoChanges={twoChanges}
           threeChanges={threeChanges}
+          isLoading={isLoading}
         />
       </main>
     </section>

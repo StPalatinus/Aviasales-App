@@ -1,5 +1,6 @@
 import aviApiService from "../../services";
-import actionsTypes from "../../assets/actions-types";
+// import actionsTypes from "../actions-types";
+import actionsTypes from "../actions-types";
 
 const getFirstTicketsPack = async (ID) => {
   const getFirstPack = async (SID = ID) => {

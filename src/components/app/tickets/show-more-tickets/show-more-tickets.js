@@ -10,14 +10,25 @@ function ShowMoreTickets({
   oneChange,
   twoChanges,
   threeChanges,
+  isLoading,
 }) {
+  const selectTrtansferNotifier = isLoading ? (
+    <></>
+  ) : (
+    <>
+      <div className={showMoreTicketsStyles.noTransfgerSelected}>
+        Не выбрано количество пересадок
+      </div>
+    </>
+  );
+
   const recievedTickets =
     hasData &&
-    allFiltersFlag &&
-    withoutChange &&
-    oneChange &&
-    twoChanges &&
-    threeChanges ? (
+    (allFiltersFlag ||
+      withoutChange ||
+      oneChange ||
+      twoChanges ||
+      threeChanges) ? (
       <footer className={showMoreTicketsStyles.showMoreButton}>
         <button
           type="button"
@@ -28,11 +39,7 @@ function ShowMoreTickets({
         </button>
       </footer>
     ) : (
-      <>
-        <div className={showMoreTicketsStyles.noTransfgerSelected}>
-          Не выбрано количество пересадок
-        </div>
-      </>
+      <>{selectTrtansferNotifier}</>
     );
   return <>{recievedTickets}</>;
 }
@@ -45,6 +52,7 @@ ShowMoreTickets.propTypes = {
   oneChange: PropTypes.bool.isRequired,
   twoChanges: PropTypes.bool.isRequired,
   threeChanges: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };
 
 export default ShowMoreTickets;

@@ -1,4 +1,4 @@
-import { filtersReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+import { filtersReducerOptions as options } from "../reducers-options/reducers-options";
 
 const initialState = {
   choseCheapest: false,

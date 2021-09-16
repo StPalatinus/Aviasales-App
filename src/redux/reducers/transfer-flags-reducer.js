@@ -1,4 +1,4 @@
-import { transferFlagsReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+import { transferFlagsReducerOptions as options } from "../reducers-options/reducers-options";
 
 const initialState = {
   allFiltersFlag: true,

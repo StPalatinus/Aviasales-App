@@ -1,4 +1,4 @@
-import { mainReducerOptions as options } from "../../assets/reducers-options/reducers-options";
+import { mainReducerOptions as options } from "../reducers-options/reducers-options";
 
 const initialState = {
   isLoading: false,

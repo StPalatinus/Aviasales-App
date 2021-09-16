@@ -68,6 +68,18 @@ function TicketsFound(props) {
     </div>
   );
 
+  const multiplySpiner = (times) => {
+    const spiners = [];
+    for (let i = 0; i < times; i++) {
+      spiners[i] = (
+        <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
+          {spinner}
+        </div>
+      );
+    }
+    return spiners;
+  };
+
   const formatTransitTime = (date, duration) => {
     const startDateInMiliseconds = Date.parse(date);
     const durationInMiliseconds = startDateInMiliseconds + duration * 60000;
@@ -179,126 +191,131 @@ function TicketsFound(props) {
 
   const workTickets = sortTickets(props.tickets).slice(0, props.visibleTickets);
 
-  const recievedTickets = hasData ? (
-    workTickets.map((currentTicket) => {
-      const formatTransferCount = (transfersArr) => {
-        switch (true) {
-          case transfersArr === 0:
-            return `без пересадок`;
-          case transfersArr === 1:
-            return `1 пересадка`;
-          case transfersArr === 2:
-          case transfersArr === 3:
-          case transfersArr === 4:
-            return `${transfersArr} пересадки`;
-          default:
-            return `${transfersArr} пересадок`;
-        }
-      };
+  const recievedTickets = hasData
+    ? workTickets.map((currentTicket) => {
+        const formatTransferCount = (transfersArr) => {
+          switch (true) {
+            case transfersArr === 0:
+              return `без пересадок`;
+            case transfersArr === 1:
+              return `1 пересадка`;
+            case transfersArr === 2:
+            case transfersArr === 3:
+            case transfersArr === 4:
+              return `${transfersArr} пересадки`;
+            default:
+              return `${transfersArr} пересадок`;
+          }
+        };
 
-      const firstSegment = `${currentTicket.segments[0].origin} - ${currentTicket.segments[0].destination}`;
-      const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
-      const flyCompanyLogo = `http:////pics.avs.io/99/36/${currentTicket.carrier}.png`;
-      return (
-        <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
-          <div className={ticketsFoundStyles.ticketHeader}>
-            <div className={ticketsFoundStyles.ticketPrice}>
-              {currentTicket.price} Р
+        const firstSegment = `${currentTicket.segments[0].origin} - ${currentTicket.segments[0].destination}`;
+        const secondSegment = `${currentTicket.segments[1].origin} - ${currentTicket.segments[1].destination}`;
+        const flyCompanyLogo = `http:////pics.avs.io/99/36/${currentTicket.carrier}.png`;
+        return (
+          <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
+            <div className={ticketsFoundStyles.ticketHeader}>
+              <div className={ticketsFoundStyles.ticketPrice}>
+                {currentTicket.price} Р
+              </div>
+              <img
+                className={ticketsFoundStyles.brandLogo}
+                // src={S7Logo}
+                src={flyCompanyLogo}
+                alt="логотип перевозчика"
+              />
             </div>
-            <img
-              className={ticketsFoundStyles.brandLogo}
-              src={flyCompanyLogo}
-              alt="логотип перевозчика"
-            />
+            <div>
+              <table className={ticketsFoundStyles.ticketInfo__table}>
+                <tbody>
+                  <tr>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__destinationsHeading
+                      }
+                    >
+                      {firstSegment}
+                    </td>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__travelTimeHeading
+                      }
+                    >
+                      В пути
+                    </td>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__transferCountHeading
+                      }
+                    >
+                      {formatTransferCount(
+                        currentTicket.segments[0].stops.length
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={ticketsFoundStyles.ticketInfo__destinations}>
+                      {formatTransitTime(
+                        currentTicket.segments[0].date,
+                        currentTicket.segments[0].duration
+                      )}
+                    </td>
+                    <td className={ticketsFoundStyles.ticketInfo__travelTime}>
+                      {formatDuration(currentTicket.segments[0].duration)}
+                    </td>
+                    <td
+                      className={ticketsFoundStyles.ticketInfo__transferCount}
+                    >
+                      {currentTicket.segments[0].stops.join(",")}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__destinationsHeading
+                      }
+                    >
+                      {secondSegment}
+                    </td>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__travelTimeHeading
+                      }
+                    >
+                      В пути
+                    </td>
+                    <td
+                      className={
+                        ticketsFoundStyles.ticketInfo__transferCountHeading
+                      }
+                    >
+                      {formatTransferCount(
+                        currentTicket.segments[1].stops.length
+                      )}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className={ticketsFoundStyles.ticketInfo__destinations}>
+                      {formatTransitTime(
+                        currentTicket.segments[1].date,
+                        currentTicket.segments[1].duration
+                      )}
+                    </td>
+                    <td className={ticketsFoundStyles.ticketInfo__travelTime}>
+                      {formatDuration(currentTicket.segments[1].duration)}
+                    </td>
+                    <td
+                      className={ticketsFoundStyles.ticketInfo__transferCount}
+                    >
+                      {currentTicket.segments[1].stops.join(", ")}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <div>
-            <table className={ticketsFoundStyles.ticketInfo__table}>
-              <tbody>
-                <tr>
-                  <td
-                    className={
-                      ticketsFoundStyles.ticketInfo__destinationsHeading
-                    }
-                  >
-                    {firstSegment}
-                  </td>
-                  <td
-                    className={ticketsFoundStyles.ticketInfo__travelTimeHeading}
-                  >
-                    В пути
-                  </td>
-                  <td
-                    className={
-                      ticketsFoundStyles.ticketInfo__transferCountHeading
-                    }
-                  >
-                    {formatTransferCount(
-                      currentTicket.segments[0].stops.length
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={ticketsFoundStyles.ticketInfo__destinations}>
-                    {formatTransitTime(
-                      currentTicket.segments[0].date,
-                      currentTicket.segments[0].duration
-                    )}
-                  </td>
-                  <td className={ticketsFoundStyles.ticketInfo__travelTime}>
-                    {formatDuration(currentTicket.segments[0].duration)}
-                  </td>
-                  <td className={ticketsFoundStyles.ticketInfo__transferCount}>
-                    {currentTicket.segments[0].stops.join(",")}
-                  </td>
-                </tr>
-                <tr>
-                  <td
-                    className={
-                      ticketsFoundStyles.ticketInfo__destinationsHeading
-                    }
-                  >
-                    {secondSegment}
-                  </td>
-                  <td
-                    className={ticketsFoundStyles.ticketInfo__travelTimeHeading}
-                  >
-                    В пути
-                  </td>
-                  <td
-                    className={
-                      ticketsFoundStyles.ticketInfo__transferCountHeading
-                    }
-                  >
-                    {formatTransferCount(
-                      currentTicket.segments[1].stops.length
-                    )}
-                  </td>
-                </tr>
-                <tr>
-                  <td className={ticketsFoundStyles.ticketInfo__destinations}>
-                    {formatTransitTime(
-                      currentTicket.segments[1].date,
-                      currentTicket.segments[1].duration
-                    )}
-                  </td>
-                  <td className={ticketsFoundStyles.ticketInfo__travelTime}>
-                    {formatDuration(currentTicket.segments[1].duration)}
-                  </td>
-                  <td className={ticketsFoundStyles.ticketInfo__transferCount}>
-                    {currentTicket.segments[1].stops.join(", ")}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
-    })
-  ) : (
-    <div className={ticketsFoundStyles.tickets__ticket} key={uuidv4()}>
-      {spinner}
-    </div>
-  );
+        );
+      })
+    : multiplySpiner(props.visibleTickets);
 
   if (optionsArr.length === 1 && optionsArr[0] === -1) {
     return (
